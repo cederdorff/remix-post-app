@@ -1,4 +1,5 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
+
 const { MONGODB_URL, NODE_ENV } = process.env;
 
 if (!MONGODB_URL) {
@@ -9,13 +10,12 @@ if (!MONGODB_URL) {
   throw new Error(errorMessage);
 }
 
-const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri);
+const client = new MongoClient(MONGODB_URL);
 
 async function getDatabase() {
   try {
-    await client.connect();
-    const db = client.db(process.env.MONGODB_DATABASE);
+    const connection = await client.connect();
+    const db = connection.db();
     return db;
   } catch (error) {
     console.error("Failed to connect to the database:", error);
@@ -37,3 +37,4 @@ process.on("SIGINT", async () => {
 const db = await getDatabase(); // Connect to the MongoDB database
 
 export default db;
+export { ObjectId };

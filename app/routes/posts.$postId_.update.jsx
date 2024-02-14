@@ -1,6 +1,5 @@
 import { json, redirect } from "@remix-run/node";
 import { useLoaderData, Form, useNavigate } from "@remix-run/react";
-import { mapFirebaseDocument } from "../helpers/firebaseDataMapper";
 import { useState } from "react";
 
 export function meta() {
@@ -16,7 +15,7 @@ export async function loader({ params }) {
     `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.postId}`
   );
   const docs = await response.json();
-  const post = mapFirebaseDocument(docs);
+  // const post = mapFirebaseDocument(docs);
   return json({ post });
 }
 

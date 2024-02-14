@@ -1,9 +1,10 @@
 import UserAvatar from "./UserAvatar";
 
 export default function PostCard({ post }) {
+  console.log(post);
   return (
     <article className="post-card">
-      <UserAvatar uid={post.uid} />
+      <UserAvatar user={post.user} />
       <img src={post.image} alt={post.caption} />
       <h3>{post.caption}</h3>
     </article>
