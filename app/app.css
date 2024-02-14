@@ -235,6 +235,11 @@ nav a.active {
   object-fit: cover;
 }
 
+.post-link {
+  text-decoration: none;
+  color: var(--text-color-dark);
+}
+
 /* ---------- avatar styling ---------- */
 
 .avatar {
