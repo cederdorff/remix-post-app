@@ -12,7 +12,6 @@ export function meta({ data }) {
 }
 
 export async function loader({ params }) {
-  console.log("params:", params.postId);
   const post = await db.collection("posts").findOne({ _id: new ObjectId(params.postId) });
   const user = await db.collection("users").findOne({ _id: post.uid });
   post.user = user;
