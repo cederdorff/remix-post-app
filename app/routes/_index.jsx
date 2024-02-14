@@ -1,7 +1,7 @@
 import { json } from "@remix-run/node";
-import { mapFirebaseDocuments } from "../helpers/firebaseDataMapper";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import PostCard from "../components/PostCard";
+import { mapFirebaseDocuments } from "../helpers/firebaseDataMapper";
 
 export const meta = () => {
   return [{ title: "Remix Post" }];
@@ -24,7 +24,9 @@ export default function Index() {
       <h1>Posts</h1>
       <section className="grid">
         {posts.map(post => (
-          <PostCard post={post} key={post.id} />
+          <Link key={post.id} className="post-link" to={`/posts/${post.id}`}>
+            <PostCard post={post} />
+          </Link>
         ))}
       </section>
     </div>
