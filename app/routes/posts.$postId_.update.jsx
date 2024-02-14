@@ -1,6 +1,7 @@
 import { json, redirect } from "@remix-run/node";
-import { useLoaderData, Form, useNavigate } from "@remix-run/react";
+import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import db, { ObjectId } from "../db/db-connect.server";
 
 export function meta() {
   return [
@@ -11,11 +12,9 @@ export function meta() {
 }
 
 export async function loader({ params }) {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.postId}`
-  );
-  const docs = await response.json();
-  // const post = mapFirebaseDocument(docs);
+  const post = await db.collection("posts").findOne({ _id: new ObjectId(params.postId) });
+  const user = await db.collection("users").findOne({ _id: post.uid });
+  post.user = user;
   return json({ post });
 }
 
