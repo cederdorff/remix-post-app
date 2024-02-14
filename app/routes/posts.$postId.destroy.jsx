@@ -1,13 +1,10 @@
 import { redirect } from "@remix-run/node";
+import db, { ObjectId } from "../db/db-connect.server";
 
 export async function action({ params }) {
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.postId}`,
-    {
-      method: "DELETE"
-    }
-  );
-  if (response.ok) {
-    return redirect("/");
+  const result = await db.collection("posts").deleteOne({ _id: new ObjectId(params.postId) });
+
+  if (result.acknowledged) {
+    return redirect("/posts");
   }
 }
