@@ -76,22 +76,17 @@ export async function action({ request, params }) {
   console.log("params:", params);
   console.log("updates:", post);
 
-  const postObj = {
-    fields: {
-      caption: { stringValue: post.caption },
-      image: { stringValue: post.image },
-      uid: { stringValue: post.uid }
-    }
-  };
-
-  const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.postId}`,
+  const result = await db.collection("posts").updateOne(
+    { _id: new ObjectId(params.postId) },
     {
-      method: "PATCH",
-      body: JSON.stringify(postObj)
+      $set: {
+        caption: post.caption,
+        image: post.image
+      }
     }
   );
-  if (response.ok) {
+
+  if (result.acknowledged && result.modifiedCount === 1) {
     return redirect(`/posts/${params.postId}`);
   }
 }
