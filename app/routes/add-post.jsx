@@ -1,6 +1,7 @@
 import { redirect } from "@remix-run/node";
 import { Form, useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import db, { ObjectId } from "../db/db-connect.server";
 
 export const meta = () => {
   return [{ title: "Remix Post App - Add New Post" }];
@@ -48,22 +49,12 @@ export async function action({ request }) {
   const post = Object.fromEntries(formData);
 
   console.log("post:", post);
+  post.createdAt = new Date();
+  post.uid = new ObjectId("65cca4b2c4d261037ec49a23");
 
-  const postObj = {
-    fields: {
-      caption: { stringValue: post.caption },
-      image: { stringValue: post.image },
-      uid: { stringValue: "IwlCsBmACaF4HOQCKdUB" }
-    }
-  };
+  const result = await db.collection("posts").insertOne(post);
 
-  const url = "https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos";
-  const response = await fetch(url, {
-    method: "POST",
-    body: JSON.stringify(postObj)
-  });
-
-  if (response.ok) {
-    return redirect("/");
+  if (result.acknowledged) {
+    return redirect("/posts");
   }
 }
