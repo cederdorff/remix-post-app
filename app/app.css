@@ -1,52 +1,52 @@
 /* ---------- Root Variables ---------- */
 :root {
-    --green: rgb(38, 76, 89);
-    --light-green: rgb(172, 198, 201);
-    --light-grey: #f1f1f4;
-    --text-color-danger: rgb(152, 58, 58);
-    --text-color-dark: #333;
-    --text-color-light: #f1f1f1;
-    --white: #f1f1f1;
+  --green: rgb(38, 76, 89);
+  --light-green: rgb(172, 198, 201);
+  --light-grey: #f1f1f4;
+  --text-color-danger: rgb(152, 58, 58);
+  --text-color-dark: #333;
+  --text-color-light: #f1f1f1;
+  --white: #f1f1f1;
 }
 
 /* ---------- HTML, body and rest styling ---------- */
 
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body,
 html {
-    background-color: var(--light-green);
-    color: var(--text-color-dark);
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    height: 100%;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0;
+  background-color: var(--light-green);
+  color: var(--text-color-dark);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  height: 100%;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
 }
 
 /* ---------- Typography ---------- */
 
 h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
 h2 {
-    font-weight: 500;
-    letter-spacing: 0.1px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
 }
 
 h3 {
-    font-weight: 500;
-    letter-spacing: 0.1px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
 }
 
 /* ---------- Form, input and button Styling ---------- */
@@ -54,223 +54,223 @@ h3 {
 textarea,
 input,
 button {
-    font-size: 1rem;
-    font-family: inherit;
-    border: none;
-    border-radius: 8px;
-    padding: 0.5rem 0.75rem;
-    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
-    background-color: white;
-    line-height: 1.5;
-    margin: 0;
+  font-size: 1rem;
+  font-family: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  background-color: white;
+  line-height: 1.5;
+  margin: 0;
 }
 button {
-    color: #3992ff;
-    font-weight: 500;
-    cursor: pointer;
+  color: #3992ff;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 textarea:hover,
 input:hover,
 button:hover {
-    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.6), 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }
 
 button:active {
-    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
-    transform: translateY(1px);
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.4);
+  transform: translateY(1px);
 }
 
 form[action$="destroy"] button {
-    color: #f44250;
+  color: #f44250;
 }
 
 form input {
-    width: 100%;
+  width: 100%;
 }
 
 form .btns {
-    grid-column: 2;
-    display: flex;
-    gap: 0.5em;
+  grid-column: 2;
+  display: flex;
+  gap: 0.5em;
 }
 
 form img {
-    max-width: 100%;
-    border-radius: 8px;
+  max-width: 100%;
+  border-radius: 8px;
 }
 
 .btns {
-    display: flex;
-    gap: 0.5em;
+  display: flex;
+  gap: 0.5em;
 }
 
-/* ---------- Photo Form Styling ---------- */
+/* ---------- Post Form Styling ---------- */
 
-#photo-form {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 1em;
-    max-width: 40rem;
-    align-items: center;
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
-    padding: 1.5em;
-    background-color: var(--white);
-    transition: 0.5s;
-    animation: fadeIn 0.5s;
-    border-radius: 8px;
+#post-form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1em;
+  max-width: 40rem;
+  align-items: center;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+  padding: 1.5em;
+  background-color: var(--white);
+  transition: 0.5s;
+  animation: fadeIn 0.5s;
+  border-radius: 8px;
 }
 
 /* ---------- Navigation Styling ---------- */
 nav {
-    background-color: var(--green);
-    display: grid;
-    left: 0;
-    position: fixed;
-    right: 0;
-    text-align: center;
-    top: 0;
+  background-color: var(--green);
+  display: grid;
+  left: 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
 }
 
 @media (min-width: 600px) {
-    nav {
-        padding: 1em 2em;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 1em;
-    }
+  nav {
+    padding: 1em 2em;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+  }
 }
 
 /* Style the links inside the navigation bar */
 nav a {
-    display: inline-block;
-    color: var(--text-color-light);
-    text-align: center;
-    padding: 20px 16px;
-    text-decoration: none;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 2px solid var(--green); /* Use the --green variable */
-    font-weight: 500;
-    font-size: 1.2em;
-    border-radius: 8px;
+  display: inline-block;
+  color: var(--text-color-light);
+  text-align: center;
+  padding: 20px 16px;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 2px solid var(--green); /* Use the --green variable */
+  font-weight: 500;
+  font-size: 1.2em;
+  border-radius: 8px;
 }
 
 /* Change the color of links on hover */
 nav a:hover {
-    background-color: var(--light-green);
-    color: var(--text-color-dark);
+  background-color: var(--light-green);
+  color: var(--text-color-dark);
 }
 
 /* Add a color to the active/current link */
 nav a.active {
-    background-color: var(--light-green);
-    color: var(--green);
+  background-color: var(--light-green);
+  color: var(--green);
 }
 
 /* ---------- Page Styling ---------- */
 .page {
-    animation: fadeIn 0.5s;
-    padding: 200px 2em;
+  animation: fadeIn 0.5s;
+  padding: 200px 2em;
 }
 
 @media (min-width: 600px) {
-    .page {
-        padding: 105px 2em;
-    }
+  .page {
+    padding: 105px 2em;
+  }
 }
 
 /* ---------- Animations ---------- */
 /* fade in */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ---------- grid container styling ---------- */
 .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1em;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
 }
 
 @media (min-width: 600px) {
-    .grid {
-        grid-template-columns: 1fr 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (min-width: 992px) {
-    .grid {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-.grid > .photo-card {
-    cursor: pointer;
+.grid > .post-card {
+  cursor: pointer;
 }
 
-.grid > .photo-card:hover {
-    box-shadow: 0 8px 16px 0 var(--green);
+.grid > .post-card:hover {
+  box-shadow: 0 8px 16px 0 var(--green);
 }
 
-/* ---------- Photo Card styling ---------- */
+/* ---------- post Card styling ---------- */
 
-.photo-card {
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
-    padding: 1.5em;
-    background-color: var(--white);
-    transition: 0.5s;
-    animation: fadeIn 0.5s;
-    border-radius: 8px;
+.post-card {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+  padding: 1.5em;
+  background-color: var(--white);
+  transition: 0.5s;
+  animation: fadeIn 0.5s;
+  border-radius: 8px;
 }
 
-.photo-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+.post-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 
 /* ---------- avatar styling ---------- */
 
 .avatar {
-    display: flex;
-    align-items: center;
-    margin: 0 0 1.2em;
-    text-align: left;
+  display: flex;
+  align-items: center;
+  margin: 0 0 1.2em;
+  text-align: left;
 }
 
 .avatar span {
-    margin: 0 0 0 1em;
+  margin: 0 0 0 1em;
 }
 
 .avatar h3,
 .avatar p {
-    margin: 0;
-    line-height: 1.2;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.photo-card .avatar img {
-    max-width: 50px;
-    max-height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
+.post-card .avatar img {
+  max-width: 50px;
+  max-height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
-/* ---------- Photo Page styling ---------- */
+/* ---------- post Page styling ---------- */
 
-#photo-page .photo-card {
-    max-width: 40rem;
+#post-page .post-card {
+  max-width: 40rem;
 }
 
-#photo-page .photo-card > img {
-    height: auto;
+#post-page .post-card > img {
+  height: auto;
 }
 
-#photo-page .btns {
-    padding: 1em 0;
+#post-page .btns {
+  padding: 1em 0;
 }

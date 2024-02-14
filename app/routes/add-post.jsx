@@ -3,9 +3,9 @@ import { Form, useNavigate } from "@remix-run/react";
 import { useState } from "react";
 
 export const meta = () => {
-  return [{ title: "Remix Photo App - Add New Photo" }];
+  return [{ title: "Remix Post App - Add New Post" }];
 };
-export default function AddPhoto() {
+export default function AddPost() {
   const [image, setImage] = useState("https://placehold.co/600x400?text=Add+your+amazing+image");
   const navigate = useNavigate();
 
@@ -15,8 +15,8 @@ export default function AddPhoto() {
 
   return (
     <div className="page">
-      <h1>Add a Photo</h1>
-      <Form id="photo-form" method="post">
+      <h1>Add a Post</h1>
+      <Form id="post-form" method="post">
         <label htmlFor="caption">Caption</label>
         <input id="caption" name="caption" type="text" aria-label="caption" placeholder="Write a caption..." />
 
@@ -45,14 +45,14 @@ export default function AddPhoto() {
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const photo = Object.fromEntries(formData);
+  const post = Object.fromEntries(formData);
 
-  console.log("photo:", photo);
+  console.log("post:", post);
 
-  const photoObj = {
+  const postObj = {
     fields: {
-      caption: { stringValue: photo.caption },
-      image: { stringValue: photo.image },
+      caption: { stringValue: post.caption },
+      image: { stringValue: post.image },
       uid: { stringValue: "IwlCsBmACaF4HOQCKdUB" }
     }
   };
@@ -60,10 +60,10 @@ export async function action({ request }) {
   const url = "https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos";
   const response = await fetch(url, {
     method: "POST",
-    body: JSON.stringify(photoObj)
+    body: JSON.stringify(postObj)
   });
 
   if (response.ok) {
-    return redirect("/photos");
+    return redirect("/");
   }
 }

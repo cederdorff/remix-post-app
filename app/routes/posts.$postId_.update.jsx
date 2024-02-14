@@ -6,23 +6,23 @@ import { useState } from "react";
 export function meta() {
   return [
     {
-      title: "Remix Photo App - Update"
+      title: "Remix Post App - Update"
     }
   ];
 }
 
 export async function loader({ params }) {
   const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.photoId}`
+    `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.postId}`
   );
   const docs = await response.json();
-  const photo = mapFirebaseDocument(docs);
-  return json({ photo });
+  const post = mapFirebaseDocument(docs);
+  return json({ post });
 }
 
-export default function UpdatePhoto() {
-  const { photo } = useLoaderData();
-  const [image, setImage] = useState(photo.image);
+export default function UpdatePost() {
+  const { post } = useLoaderData();
+  const [image, setImage] = useState(post.image);
   const navigate = useNavigate();
 
   function handleCancel() {
@@ -31,12 +31,12 @@ export default function UpdatePhoto() {
 
   return (
     <div className="page">
-      <h1>Update Photo</h1>
-      <Form id="photo-form" method="post">
+      <h1>Update Post</h1>
+      <Form id="post-form" method="post">
         <label htmlFor="caption">Caption</label>
         <input
           id="caption"
-          defaultValue={photo.caption}
+          defaultValue={post.caption}
           name="caption"
           type="text"
           aria-label="caption"
@@ -45,7 +45,7 @@ export default function UpdatePhoto() {
         <label htmlFor="image">Image URL</label>
         <input
           name="image"
-          defaultValue={photo.image}
+          defaultValue={post.image}
           type="url"
           onChange={e => setImage(e.target.value)}
           placeholder="Paste an image URL..."
@@ -60,7 +60,7 @@ export default function UpdatePhoto() {
           onError={e => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
         />
 
-        <input name="uid" type="text" defaultValue={photo.uid} hidden />
+        <input name="uid" type="text" defaultValue={post.uid} hidden />
         <div className="btns">
           <button>Save</button>
           <button type="button" onClick={handleCancel}>
@@ -74,26 +74,26 @@ export default function UpdatePhoto() {
 
 export async function action({ request, params }) {
   const formData = await request.formData();
-  const photo = Object.fromEntries(formData);
+  const post = Object.fromEntries(formData);
   console.log("params:", params);
-  console.log("updates:", photo);
+  console.log("updates:", post);
 
-  const photoObj = {
+  const postObj = {
     fields: {
-      caption: { stringValue: photo.caption },
-      image: { stringValue: photo.image },
-      uid: { stringValue: photo.uid }
+      caption: { stringValue: post.caption },
+      image: { stringValue: post.image },
+      uid: { stringValue: post.uid }
     }
   };
 
   const response = await fetch(
-    `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.photoId}`,
+    `https://firestore.googleapis.com/v1/projects/race-photo-app/databases/(default)/documents/photos/${params.postId}`,
     {
       method: "PATCH",
-      body: JSON.stringify(photoObj)
+      body: JSON.stringify(postObj)
     }
   );
   if (response.ok) {
-    return redirect(`/photos/${params.photoId}`);
+    return redirect(`/posts/${params.postId}`);
   }
 }

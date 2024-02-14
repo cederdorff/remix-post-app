@@ -1,5 +1,5 @@
 {
-  "name": "remix-photo-app",
+  "name": "remix-post-app",
   "private": true,
   "sideEffects": false,
   "type": "module",

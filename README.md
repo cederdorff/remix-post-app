@@ -1,2 +1,1 @@
-# remix-photo-app
- 
+# remix-post-app
