@@ -1,7 +1,7 @@
 import { redirect } from "@remix-run/node";
 import { Form, useNavigate } from "@remix-run/react";
+import mongoose from "mongoose";
 import { useState } from "react";
-import db, { ObjectId } from "../db/db-connect.server";
 
 export const meta = () => {
   return [{ title: "Remix Post App - Add New Post" }];
@@ -47,13 +47,7 @@ export default function AddPost() {
 export async function action({ request }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
+  await mongoose.models.Post.create(post);
 
-  post.createdAt = new Date();
-  post.uid = new ObjectId("65cca4b2c4d261037ec49a23");
-
-  const result = await db.collection("posts").insertOne(post);
-
-  if (result.acknowledged) {
-    return redirect("/posts");
-  }
+  return redirect("/posts");
 }

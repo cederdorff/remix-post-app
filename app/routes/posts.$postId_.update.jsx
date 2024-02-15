@@ -1,7 +1,7 @@
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
-import db, { ObjectId } from "../db/db-connect.server";
+import mongoose from "mongoose";
 
 export function meta() {
   return [
@@ -12,9 +12,7 @@ export function meta() {
 }
 
 export async function loader({ params }) {
-  const post = await db.collection("posts").findOne({ _id: new ObjectId(params.postId) });
-  const user = await db.collection("users").findOne({ _id: post.uid });
-  post.user = user;
+  const post = await mongoose.models.Post.findById(params.postId).populate("user");
   return json({ post });
 }
 
@@ -74,17 +72,10 @@ export async function action({ request, params }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
 
-  const result = await db.collection("posts").updateOne(
-    { _id: new ObjectId(params.postId) },
-    {
-      $set: {
-        caption: post.caption,
-        image: post.image
-      }
-    }
-  );
+  await mongoose.models.Post.findByIdAndUpdate(params.postId, {
+    caption: post.caption,
+    image: post.image
+  });
 
-  if (result.acknowledged && result.modifiedCount === 1) {
-    return redirect(`/posts/${params.postId}`);
-  }
+  return redirect(`/posts/${params.postId}`);
 }

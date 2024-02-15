@@ -1,38 +1,14 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import PostCard from "../components/PostCard";
-import db from "../db/db-connect.server";
+import mongoose from "mongoose";
 
 export const meta = () => {
   return [{ title: "Remix Post App" }];
 };
 
 export async function loader() {
-  const posts = await db
-    .collection("posts")
-    .aggregate([
-      {
-        $lookup: {
-          from: "users",
-          localField: "uid",
-          foreignField: "_id",
-          as: "user"
-        }
-      },
-      {
-        $unwind: "$user"
-      },
-      {
-        $project: {
-          caption: 1,
-          createdAt: 1,
-          image: 1,
-          user: 1
-        }
-      }
-    ])
-    .sort({ createdAt: -1 })
-    .toArray();
+  const posts = await mongoose.models.Post.find().sort({ createdAt: -1 }).populate("user").exec();
 
   return json({ posts });
 }
