@@ -1,6 +1,7 @@
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import mongoose from "mongoose";
 
 export function meta() {
   return [
@@ -11,10 +12,8 @@ export function meta() {
 }
 
 export async function loader({ params }) {
-  // const post = await db.collection("posts").findOne({ _id: new ObjectId(params.postId) });
-  // const user = await db.collection("users").findOne({ _id: post.uid });
-  // post.user = user;
-  return json({});
+  const post = await mongoose.model("Post").findOne({ _id: params.postId }).populate("user").exec();
+  return json({ post });
 }
 
 export default function UpdatePost() {
@@ -73,17 +72,23 @@ export async function action({ request, params }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
 
-  // const result = await db.collection("posts").updateOne(
-  //   { _id: new ObjectId(params.postId) },
-  //   {
-  //     $set: {
-  //       caption: post.caption,
-  //       image: post.image
-  //     }
-  //   }
-  // );
+  const result = await mongoose.model("Post").updateOne(
+    {
+      _id: params.postId
+    },
+    {
+      $set: {
+        caption: post.caption,
+        image: post.image
+      }
+    }
+  );
 
-  // if (result.acknowledged && result.modifiedCount === 1) {
-  //   return redirect(`/posts/${params.postId}`);
-  // }
+  console.log(result);
+
+  if (result.acknowledged && result.modifiedCount === 1) {
+    return redirect(`/posts/${params.postId}`);
+  } else {
+    return redirect(`/posts/${params.postId}/update`);
+  }
 }
