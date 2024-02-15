@@ -2,23 +2,28 @@ import mongoose from "mongoose";
 import { Mongoose } from "mongoose";
 
 // schemas
-const userSchema = new mongoose.Schema({
-  image: String,
-  mail: String,
-  name: String,
-  title: String
-});
+const userSchema = new mongoose.Schema(
+  {
+    image: String,
+    mail: String,
+    name: String,
+    title: String
+  },
+  { timestamps: true }
+);
 
-const postSchema = new mongoose.Schema({
-  caption: String,
-  createdAt: { type: Date, default: Date.now },
-  image: String,
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    default: new mongoose.Types.ObjectId("65cde4cb0d09cb615a23db17")
-  }
-});
+const postSchema = new mongoose.Schema(
+  {
+    caption: String,
+    image: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: new mongoose.Types.ObjectId("65cde4cb0d09cb615a23db17")
+    }
+  },
+  { timestamps: true }
+);
 // define models
 const User = mongoose.model("User", userSchema);
 const Post = mongoose.model("Post", postSchema);
@@ -34,7 +39,8 @@ export async function initData() {
   // check if data exists
   const userCount = await User.countDocuments();
   const postCount = await Post.countDocuments();
-  if (userCount === 0 && postCount === 0) {
+
+  if (userCount === 0 || postCount === 0) {
     console.log("Inserting data...");
     const User = mongoose.model("User");
     const Post = mongoose.model("Post");
@@ -86,63 +92,54 @@ export async function initData() {
     await Post.insertMany([
       {
         caption: "Beautiful sunset at the beach",
-        createdAt: new Date("2023-04-05T15:27:14Z"),
         image:
           "https://images.unsplash.com/photo-1566241832378-917a0f30db2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: maria._id
       },
       {
         caption: "Exploring the city streets of Aarhus",
-        createdAt: new Date("2023-04-06T10:45:30Z"),
         image:
           "https://images.unsplash.com/photo-1559070169-a3077159ee16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: rasmus._id
       },
       {
         caption: "Delicious food at the restaurant",
-        createdAt: new Date("2023-04-04T20:57:24Z"),
         image:
           "https://images.unsplash.com/photo-1548940740-204726a19be3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: line._id
       },
       {
         caption: "Exploring the city center of Aarhus",
-        createdAt: new Date("2023-04-06T10:58:24Z"),
         image:
           "https://images.unsplash.com/photo-1612624629424-ddde915d3dc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: rasmus._id
       },
       {
         caption: "A cozy morning with coffee",
-        createdAt: new Date("2023-04-03T08:21:04Z"),
         image:
           "https://images.unsplash.com/photo-1545319261-f3760f9dd64d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: dan._id
       },
       {
         caption: "Serenity of the forest",
-        createdAt: new Date("2023-04-05T14:34:04Z"),
         image:
           "https://images.unsplash.com/photo-1661505216710-32316e7b5bb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: rasmus._id
       },
       {
         caption: "A beautiful morning in Aarhus",
-        createdAt: new Date("2023-04-06T09:10:54Z"),
         image:
           "https://images.unsplash.com/photo-1573997953524-efed43db70a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: maria._id
       },
       {
         caption: "Rainbow reflections of the city of Aarhus",
-        createdAt: new Date("2023-04-02T20:25:34Z"),
         image:
           "https://images.unsplash.com/photo-1558443336-dbb3de50b8b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
         user: anne._id
       },
       {
         caption: "The city streets of Aarhus ✨",
-        createdAt: new Date("2023-04-02T20:25:34Z"),
         image:
           "https://images.unsplash.com/photo-1596150368199-1dddc9fc34cc?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         user: rasmus._id
