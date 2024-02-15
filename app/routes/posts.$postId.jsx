@@ -1,6 +1,7 @@
 import { json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
 import PostCard from "../components/PostCard";
+import mongoose from "mongoose";
 
 export function meta({ data }) {
   return [
@@ -11,10 +12,8 @@ export function meta({ data }) {
 }
 
 export async function loader({ params }) {
-  // const post = await db.collection("posts").findOne({ _id: new ObjectId(params.postId) });
-  // const user = await db.collection("users").findOne({ _id: post.uid });
-  // post.user = user;
-  return json({});
+  const post = await mongoose.model("Post").findOne({ _id: params.postId }).populate("user").exec();
+  return json({ post });
 }
 
 export default function Post() {
