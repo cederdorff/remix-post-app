@@ -35,7 +35,7 @@ export default function AddPost() {
 
         <div className="btns">
           <button>Save</button>
-          <button type="button" onClick={handleCancel}>
+          <button type="button" className="btn-cancel" onClick={handleCancel}>
             Cancel
           </button>
         </div>
