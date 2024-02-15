@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Mongoose } from "mongoose";
 
 // schemas
 const userSchema = new mongoose.Schema({
@@ -10,9 +11,13 @@ const userSchema = new mongoose.Schema({
 
 const postSchema = new mongoose.Schema({
   caption: String,
-  createdAt: Date,
+  createdAt: { type: Date, default: Date.now },
   image: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: new mongoose.Types.ObjectId("65cde4cb0d09cb615a23db17")
+  }
 });
 // define models
 const User = mongoose.model("User", userSchema);
@@ -47,6 +52,7 @@ export async function initData() {
     });
 
     const rasmus = await User.create({
+      _id: new mongoose.Types.ObjectId("65cde4cb0d09cb615a23db17"),
       image: "https://share.cederdorff.dk/images/race.webp",
       mail: "race@eaaa.dk",
       name: "Rasmus Cederdorff",
