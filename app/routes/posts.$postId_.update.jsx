@@ -73,8 +73,6 @@ export default function UpdatePost() {
 export async function action({ request, params }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
-  console.log("params:", params);
-  console.log("updates:", post);
 
   const result = await db.collection("posts").updateOne(
     { _id: new ObjectId(params.postId) },

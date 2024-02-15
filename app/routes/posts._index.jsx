@@ -31,9 +31,9 @@ export async function loader() {
         }
       }
     ])
+    .sort({ createdAt: -1 })
     .toArray();
 
-  console.log(posts);
   return json({ posts });
 }
 
