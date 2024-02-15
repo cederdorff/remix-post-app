@@ -23,9 +23,6 @@ const postSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-// define models
-const User = mongoose.model("User", userSchema);
-const Post = mongoose.model("Post", postSchema);
 
 export const models = [
   { name: "User", schema: userSchema, collection: "users" },
@@ -35,6 +32,8 @@ export const models = [
 // ========== Export - initModels ========== //
 
 export async function initData() {
+  const User = mongoose.models.User;
+  const Post = mongoose.models.Post;
   // check if data exists
   const userCount = await User.countDocuments();
   const postCount = await Post.countDocuments();
