@@ -18,14 +18,22 @@ const postSchema = new mongoose.Schema({
 // ========== Export - initModels ========== //
 
 export async function initModels() {
-  mongoose.model("User", userSchema);
-  mongoose.model("Post", postSchema);
+  // define models
+  const User = mongoose.model("User", userSchema);
+  const Post = mongoose.model("Post", postSchema);
 
-  await initData();
+  // check if data exists
+  const userCount = await User.countDocuments();
+  const postCount = await Post.countDocuments();
+  if (userCount === 0 && postCount === 0) {
+    // insert data
+    await initData();
+  }
 }
 
 // ========== Data ========== //
 async function initData() {
+  console.log("Inserting data...");
   const User = mongoose.model("User");
   const Post = mongoose.model("Post");
 
