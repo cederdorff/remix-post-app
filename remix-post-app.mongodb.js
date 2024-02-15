@@ -101,5 +101,12 @@ db.getCollection("posts").insertMany([
     image:
       "https://images.unsplash.com/photo-1558443336-dbb3de50b8b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
     uid: anne.insertedId
+  },
+  {
+    caption: "The city streets of Aarhus ✨",
+    createdAt: new Date("2023-04-02T20:25:34Z"),
+    image:
+      "https://images.unsplash.com/photo-1596150368199-1dddc9fc34cc?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    uid: rasmus.insertedId
   }
 ]);
