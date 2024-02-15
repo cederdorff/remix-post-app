@@ -48,7 +48,6 @@ export async function action({ request }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
 
-  console.log("post:", post);
   post.createdAt = new Date();
   post.uid = new ObjectId("65cca4b2c4d261037ec49a23");
 
