@@ -36,6 +36,7 @@ const line = db.getCollection("users").insertOne({
 });
 
 const dan = db.getCollection("users").insertOne({
+  _id: ObjectId("65cca4b2c4d261037ec49a23"),
   image:
     "https://www.eaaa.dk/media/bdojel41/dan-okkels-brendstrup.jpg?anchor=center&mode=crop&width=800&height=450&rnd=132792921559630000&format=webp",
   mail: "dob@eaaa.dk",
@@ -57,7 +58,7 @@ db.getCollection("posts").insertMany([
     createdAt: new Date("2023-04-06T10:45:30Z"),
     image:
       "https://images.unsplash.com/photo-1559070169-a3077159ee16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    uid: dan.insertedId
+    uid: ObjectId("65cca4b2c4d261037ec49a23")
   },
   {
     caption: "Delicious food at the restaurant",
@@ -78,7 +79,7 @@ db.getCollection("posts").insertMany([
     createdAt: new Date("2023-04-03T08:21:04Z"),
     image:
       "https://images.unsplash.com/photo-1545319261-f3760f9dd64d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    uid: dan.insertedId
+    uid: ObjectId("65cca4b2c4d261037ec49a23")
   },
   {
     caption: "Serenity of the forest",
@@ -99,6 +100,6 @@ db.getCollection("posts").insertMany([
     createdAt: new Date("2023-04-02T20:25:34Z"),
     image:
       "https://images.unsplash.com/photo-1558443336-dbb3de50b8b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-    uid: line.insertedId
+    uid: anne.insertedId
   }
 ]);
