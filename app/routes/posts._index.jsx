@@ -8,7 +8,7 @@ export const meta = () => {
 };
 
 export async function loader() {
-  const posts = await mongoose.model("Post").find().sort({ createdAt: -1 }).populate("user").exec();
+  const posts = await mongoose.models.Post.find().sort({ createdAt: -1 }).populate("user").exec();
 
   return json({ posts });
 }

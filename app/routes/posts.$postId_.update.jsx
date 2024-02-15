@@ -12,7 +12,7 @@ export function meta() {
 }
 
 export async function loader({ params }) {
-  const post = await mongoose.model("Post").findOne({ _id: params.postId }).populate("user").exec();
+  const post = await mongoose.models.Post.findById(params.postId).populate("user");
   return json({ post });
 }
 
@@ -72,23 +72,10 @@ export async function action({ request, params }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
 
-  const result = await mongoose.model("Post").updateOne(
-    {
-      _id: params.postId
-    },
-    {
-      $set: {
-        caption: post.caption,
-        image: post.image
-      }
-    }
-  );
+  await mongoose.models.Post.findByIdAndUpdate(params.postId, {
+    caption: post.caption,
+    image: post.image
+  });
 
-  console.log(result);
-
-  if (result.acknowledged && result.modifiedCount === 1) {
-    return redirect(`/posts/${params.postId}`);
-  } else {
-    return redirect(`/posts/${params.postId}/update`);
-  }
+  return redirect(`/posts/${params.postId}`);
 }

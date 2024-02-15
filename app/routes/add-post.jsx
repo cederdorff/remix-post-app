@@ -47,8 +47,7 @@ export default function AddPost() {
 export async function action({ request }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
-  const result = await mongoose.model("Post").create(post);
-  if (result._id) {
-    return redirect("/posts");
-  }
+  await mongoose.models.Post.create(post);
+
+  return redirect("/posts");
 }

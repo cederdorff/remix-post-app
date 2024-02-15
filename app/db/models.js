@@ -42,8 +42,6 @@ export async function initData() {
 
   if (userCount === 0 || postCount === 0) {
     console.log("Inserting data...");
-    const User = mongoose.model("User");
-    const Post = mongoose.model("Post");
 
     await User.collection.drop();
     await Post.collection.drop();
