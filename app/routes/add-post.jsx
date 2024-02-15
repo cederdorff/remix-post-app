@@ -1,7 +1,6 @@
 import { redirect } from "@remix-run/node";
 import { Form, useNavigate } from "@remix-run/react";
 import { useState } from "react";
-import db, { ObjectId } from "../db/db-connect.server";
 
 export const meta = () => {
   return [{ title: "Remix Post App - Add New Post" }];
@@ -48,10 +47,10 @@ export async function action({ request }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
 
-  post.createdAt = new Date();
-  post.uid = new ObjectId("65cca4b2c4d261037ec49a23");
+  // post.createdAt = new Date();
+  // post.uid = new ObjectId("65cca4b2c4d261037ec49a23");
 
-  const result = await db.collection("posts").insertOne(post);
+  // const result = await db.collection("posts").insertOne(post);
 
   if (result.acknowledged) {
     return redirect("/posts");

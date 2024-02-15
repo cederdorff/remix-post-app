@@ -1,12 +1,12 @@
-import { MongoClient, ObjectId } from "mongodb";
+import mongoose from "mongoose";
 
-const client = new MongoClient(process.env.MONGODB_URL);
+console.log("Connecting to the database:", process.env.MONGODB_URL);
 
-async function getDatabase() {
+export async function initMongoose() {
   try {
-    const connection = await client.connect();
-    const db = connection.db();
-    return db;
+    const connection = await mongoose.connect(process.env.MONGODB_URL);
+    console.log("Connected to the database");
+    return connection;
   } catch (error) {
     console.error("Failed to connect to the database:", error);
     throw error;
@@ -15,16 +15,11 @@ async function getDatabase() {
 
 // Automatically close the database connection when the Node.js process exits
 process.on("exit", async () => {
-  await client.close();
+  await mongoose.disconnect();
 });
 
 // Handle CTRL+C events
 process.on("SIGINT", async () => {
-  await client.close();
+  await mongoose.disconnect();
   process.exit();
 });
-
-const db = await getDatabase(); // Connect to the MongoDB database
-
-export default db;
-export { ObjectId };
