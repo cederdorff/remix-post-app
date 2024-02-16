@@ -71,7 +71,11 @@ async function insertData() {
     mail: "race@eaaa.dk",
     name: "Rasmus Cederdorff",
     title: "Senior Lecturer",
-    educations: ["Multimedia Design", "Web Development", "Digital Concept Development"]
+    educations: [
+      "Multimedia Design",
+      "Web Development",
+      "Digital Concept Development"
+    ]
   });
 
   const anne = await User.create({
@@ -80,11 +84,16 @@ async function insertData() {
     mail: "anki@eaaa.dk",
     name: "Anne Kirketerp",
     title: "Head of Department",
-    educations: ["Multimedia Design", "Web Development", "Digital Concept Development"]
+    educations: [
+      "Multimedia Design",
+      "Web Development",
+      "Digital Concept Development"
+    ]
   });
 
   const line = await User.create({
-    image: "https://www.eaaa.dk/media/14qpfeq4/line-skjodt.jpg?width=800&height=450&rnd=133178433559770000",
+    image:
+      "https://www.eaaa.dk/media/14qpfeq4/line-skjodt.jpg?width=800&height=450&rnd=133178433559770000",
     mail: "lskj@eaaa.dk",
     name: "Line Skjødt",
     title: "Senior Lecturer & Internship Coordinator",

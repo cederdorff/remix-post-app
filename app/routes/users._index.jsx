@@ -8,24 +8,24 @@ export const meta = () => {
 };
 
 export async function loader() {
-  const posts = await mongoose.models.Post.find()
-    .sort({ createdAt: -1 })
-    .populate("user")
-    .exec();
-
-  return json({ posts });
+  const users = await mongoose.models.User.find();
+  console.log(users);
+  return json({ users });
 }
 
 export default function Index() {
-  const { posts } = useLoaderData();
+  const { users } = useLoaderData();
   return (
     <div className="page">
-      <h1>Posts</h1>
+      <h1>Users</h1>
       <section className="grid">
-        {posts.map(post => (
-          <Link key={post._id} className="post-link" to={`${post._id}`}>
-            <PostCard post={post} />
-          </Link>
+        {users.map(user => (
+          <div className="user-card">
+            <img src={user.image} alt="" />
+            <h3>{user.name}</h3>
+            <p>{user.title}</p>
+            <p>{user.mail}</p>
+          </div>
         ))}
       </section>
     </div>
