@@ -1,7 +1,8 @@
 import { json } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import PostCard from "../components/PostCard";
 import mongoose from "mongoose";
+import PostCard from "../components/PostCard";
+import { authenticator } from "../services/auth.server";
 
 export function meta({ data }) {
   return [
@@ -11,10 +12,13 @@ export function meta({ data }) {
   ];
 }
 
-export async function loader({ params }) {
-  const post = await mongoose.models.Post.findById(params.postId).populate(
-    "user"
-  );
+export async function loader({ request, params }) {
+  // Ensure the user is authenticated
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login"
+  });
+  // Load the post and the user who created it
+  const post = await mongoose.models.Post.findById(params.postId).populate("user");
   return json({ post });
 }
 

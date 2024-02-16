@@ -1,12 +1,23 @@
 import { redirect } from "@remix-run/node";
-import { Form, useNavigate } from "@remix-run/react";
+import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useState } from "react";
+import { authenticator } from "../services/auth.server";
 
 export const meta = () => {
   return [{ title: "Remix Post App - Add New Post" }];
 };
+
+export async function loader({ request }) {
+  return await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login"
+  });
+}
+
 export default function AddPost() {
+  const user = useLoaderData();
+  console.log(user);
+
   const [image, setImage] = useState("https://placehold.co/600x400?text=Add+your+amazing+image");
   const navigate = useNavigate();
 
