@@ -12,7 +12,9 @@ export function meta({ data }) {
 }
 
 export async function loader({ params }) {
-  const post = await mongoose.models.Post.findById(params.postId).populate("user");
+  const post = await mongoose.models.Post.findById(params.postId).populate(
+    "user"
+  );
   return json({ post });
 }
 
