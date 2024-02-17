@@ -5,9 +5,7 @@ export default function Nav() {
     <nav>
       <NavLink to="/posts">Posts</NavLink>
       <NavLink to="/add-post">Add Post</NavLink>
-      <Form action="/logout" method="post">
-        <button>Logout</button>
-      </Form>
+      <NavLink to="/profile">Profile</NavLink>
     </nav>
   );
 }
