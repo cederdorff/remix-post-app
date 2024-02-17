@@ -10,24 +10,36 @@ export async function loader({ request }) {
     successRedirect: "/posts"
   });
   const session = await sessionStorage.getSession(request.headers.get("Cookie"));
-
   const error = session.get("sessionErrorKey");
-
   return json({ error });
 }
 
 export default function Login() {
-  // if i got an error it will come back with the loader data
+  // if i got an error it will come back with the loader dxata
   const loaderData = useLoaderData();
-
+  console.log("loaderData", loaderData);
   return (
-    <div className="page">
-      <Form method="post">
-        <input type="email" name="mail" placeholder="mail" required />
-        <input type="password" name="password" placeholder="password" autoComplete="current-password" />
-        <button>Sign In</button>
+    <div id="sign-in-page" className="page">
+      <h1>Sign In</h1>
+      <Form id="sign-in-form" method="post">
+        <label htmlFor="mail">Mail</label>
+        <input id="mail" type="email" name="mail" aria-label="caption" placeholder="Type your mail..." required />
+
+        <label htmlFor="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          aria-label="password"
+          placeholder="Type your password..."
+          autoComplete="current-password"
+        />
+        <div className="btns">
+          <button>Sign In</button>
+        </div>
+        <div className="error-message">{loaderData?.error ? <p>ERROR: {loaderData?.error?.message}</p> : null}</div>
       </Form>
-      <div>{loaderData?.error ? <p>ERROR: {loaderData?.error?.message}</p> : null}</div>
     </div>
   );
 }
@@ -37,7 +49,7 @@ export async function action({ request }) {
   // request object, optionally we pass an object with the URLs we want the user
   // to be redirected to after a success or a failure
   return await authenticator.authenticate("user-pass", request, {
-    successRedirect: "/posts",
+    successRedirect: "/profile",
     failureRedirect: "/login"
   });
 }
