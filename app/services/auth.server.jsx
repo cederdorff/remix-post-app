@@ -1,4 +1,3 @@
-// app/services/auth.server.ts
 import { Authenticator, AuthorizationError } from "remix-auth";
 import { sessionStorage } from "./session.server";
 import { FormStrategy } from "remix-auth-form";
