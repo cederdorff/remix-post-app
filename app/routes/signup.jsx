@@ -62,11 +62,12 @@ export default function SignUp() {
 }
 
 export async function action({ request }) {
-  const formData = await request.formData();
-  const newUser = Object.fromEntries(formData);
+  const formData = await request.formData(); // get the form data
+  const newUser = Object.fromEntries(formData); // convert the form data to an object
 
-  const result = await mongoose.models.User.create(newUser);
+  const result = await mongoose.models.User.create(newUser); // create the user
 
+  // if the user was created successfully redirect to /signin
   if (result) {
     return redirect("/signin");
   } else {
