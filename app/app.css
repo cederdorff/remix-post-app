@@ -1,6 +1,7 @@
 /* ---------- Root Variables ---------- */
 :root {
   --green: rgb(38, 76, 89);
+  --dark-green: rgb(9, 47, 59);
   --light-green: rgb(172, 198, 201);
   --light-grey: #f1f1f4;
   --text-color-danger: rgb(152, 58, 58);
@@ -48,6 +49,16 @@ h2 {
 h3 {
   font-weight: 500;
   letter-spacing: 0.1px;
+}
+
+a {
+  color: var(--green);
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+a:hover {
+  color: var(--dark-green);
 }
 
 /* ---------- Form, input and button Styling ---------- */
@@ -126,11 +137,12 @@ form img {
 /* ---------- Post Form Styling ---------- */
 
 #post-form,
-#sign-in-form {
+#sign-in-form,
+#sign-up-form {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 1em;
-  max-width: 50rem;
+  max-width: 60rem;
   align-items: center;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
   padding: 1.5em;
@@ -138,6 +150,11 @@ form img {
   transition: 0.5s;
   animation: fadeIn 0.5s;
   border-radius: 8px;
+}
+
+#sign-in-form,
+#sign-up-form {
+  width: 35rem;
 }
 
 /* ---------- Navigation Styling ---------- */
@@ -290,12 +307,13 @@ nav a.active {
 }
 
 /* ---------- Login Form Styling ---------- */
-#sign-in-page {
+#sign-in-page,
+#sign-up-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 85vh;
 }
 
 .error-message {
