@@ -1,5 +1,4 @@
-// app/routes/login.tsx
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, NavLink, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { sessionStorage } from "../services/session.server";
 import { authenticator } from "../services/auth.server";
@@ -19,16 +18,14 @@ export async function loader({ request }) {
 export default function SignIn() {
   // if i got an error it will come back with the loader dxata
   const loaderData = useLoaderData();
-  console.log("loaderData", loaderData);
   return (
     <div id="sign-in-page" className="page">
       <h1>Sign In</h1>
       <Form id="sign-in-form" method="post">
         <label htmlFor="mail">Mail</label>
-        <input id="mail" type="email" name="mail" aria-label="caption" placeholder="Type your mail..." required />
+        <input id="mail" type="email" name="mail" aria-label="mail" placeholder="Type your mail..." required />
 
         <label htmlFor="password">Password</label>
-
         <input
           id="password"
           type="password"
@@ -40,8 +37,16 @@ export default function SignIn() {
         <div className="btns">
           <button>Sign In</button>
         </div>
-        <div className="error-message">{loaderData?.error ? <p>{loaderData?.error?.message}</p> : null}</div>
+
+        {loaderData?.error ? (
+          <div className="error-message">
+            <p>{loaderData?.error?.message}</p>
+          </div>
+        ) : null}
       </Form>
+      <p>
+        No account? <NavLink to="/signup">Sign up here.</NavLink>
+      </p>
     </div>
   );
 }
