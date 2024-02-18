@@ -16,7 +16,6 @@ export async function loader({ request }) {
 
 export default function AddPost() {
   const user = useLoaderData();
-  console.log(user);
 
   const [image, setImage] = useState("https://placehold.co/600x400?text=Add+your+amazing+image");
   const navigate = useNavigate();
