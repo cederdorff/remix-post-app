@@ -2,6 +2,8 @@
 import { Authenticator, AuthorizationError } from "remix-auth";
 import { sessionStorage } from "./session.server";
 import { FormStrategy } from "remix-auth-form";
+import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 // Create an instance of the authenticator, pass a generic with what
 // strategies will return and will store in the session
@@ -14,40 +16,39 @@ authenticator.use(
   new FormStrategy(async ({ form }) => {
     let mail = form.get("mail");
     let password = form.get("password");
-    let user = null;
 
-    // do some validation, errors are in the sessionErrorKey
-    if (!mail || mail?.length === 0) {
-      throw new AuthorizationError("Bad Credentials: Email is required");
-    }
-    if (typeof mail !== "string") {
-      throw new AuthorizationError("Bad Credentials: Email must be a string");
+    // do some validation, errors are saved in the sessionErrorKey
+    if (!mail || typeof mail !== "string" || !mail.trim()) {
+      throw new AuthorizationError("Email is required and must be a string");
     }
 
-    if (!password || password?.length === 0) {
-      throw new AuthorizationError("Bad Credentials: Password is required");
-    }
-    if (typeof password !== "string") {
-      throw new AuthorizationError("Bad Credentials: Password must be a string");
+    if (!password || typeof password !== "string" || !password.trim()) {
+      throw new AuthorizationError("Password is required and must be a string");
     }
 
-    // the type of this user must match the type you pass to the Authenticator
-    // the strategy will automatically inherit the type if you instantiate
-    // directly inside the `use` method
-
-    // login the user, this could be whatever process you want
-    if (mail === "race@eaaa.dk" && password === "test01") {
-      user = {
-        mail
-      };
-
-      return user;
-    } else {
+    // verify the user
+    const user = await verifyUser({ mail, password });
+    if (!user) {
       // if problem with user throw error AuthorizationError
-      throw new AuthorizationError("Bad Credentials: User not found ");
+      throw new AuthorizationError("User not found");
     }
+    console.log(user);
+    return user;
   }),
-  // each strategy has a name and can be changed to use another one
-  // same strategy multiple times, especially useful for the OAuth2 strategy.
   "user-pass"
 );
+
+async function verifyUser({ mail, password }) {
+  const user = await mongoose.models.User.findOne({ mail }).select("+password");
+  if (!user) {
+    throw new AuthorizationError("No user found with this email.");
+  }
+
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) {
+    throw new AuthorizationError("Invalid password.");
+  }
+  // Remove the password from the user object before returning it
+  user.password = undefined;
+  return user;
+}
