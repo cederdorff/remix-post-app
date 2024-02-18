@@ -11,7 +11,6 @@ export async function loader({ request }) {
 
 export default function App() {
   const user = useLoaderData();
-  console.log(user);
   return (
     <html lang="en">
       <head>
