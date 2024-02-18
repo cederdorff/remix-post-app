@@ -3,7 +3,7 @@ import { authenticator } from "../services/auth.server";
 
 export async function loader({ request }) {
   return await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login"
+    failureRedirect: "/signin"
   });
 }
 
@@ -13,9 +13,13 @@ export default function Profile() {
     <div className="page">
       <h1>Profile</h1>
       <p>User: {user.mail}</p>
-      <Form action="/logout" method="post">
+      <Form method="post">
         <button>Logout</button>
       </Form>
     </div>
   );
+}
+
+export async function action({ request }) {
+  await authenticator.logout(request, { redirectTo: "/signin" });
 }

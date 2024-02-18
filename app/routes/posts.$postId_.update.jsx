@@ -14,7 +14,7 @@ export function meta() {
 
 export async function loader({ request, params }) {
   await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login"
+    failureRedirect: "/signin"
   });
 
   const post = await mongoose.models.Post.findById(params.postId).populate("user");

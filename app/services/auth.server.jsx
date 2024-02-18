@@ -6,7 +6,6 @@ import { FormStrategy } from "remix-auth-form";
 // Create an instance of the authenticator, pass a generic with what
 // strategies will return and will store in the session
 export let authenticator = new Authenticator(sessionStorage, {
-  sessionKey: "sessionKey", // keep in sync
   sessionErrorKey: "sessionErrorKey" // keep in sync
 });
 
@@ -45,7 +44,7 @@ authenticator.use(
       return user;
     } else {
       // if problem with user throw error AuthorizationError
-      throw new AuthorizationError("Bad Credentials");
+      throw new AuthorizationError("Bad Credentials: User not found ");
     }
   }),
   // each strategy has a name and can be changed to use another one

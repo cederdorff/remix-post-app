@@ -10,7 +10,7 @@ export const meta = () => {
 
 export async function loader({ request }) {
   await authenticator.isAuthenticated(request, {
-    failureRedirect: "/login"
+    failureRedirect: "/signin"
   });
 
   const posts = await mongoose.models.Post.find().sort({ createdAt: -1 }).populate("user");

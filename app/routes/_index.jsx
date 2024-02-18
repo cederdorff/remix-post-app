@@ -9,10 +9,6 @@ export async function loader({ request }) {
   // return redirect("/posts");
   return await authenticator.isAuthenticated(request, {
     successRedirect: "/posts",
-    failureRedirect: "/login"
+    failureRedirect: "/signin"
   });
-}
-
-export async function action({ request }) {
-  await authenticator.logout(request, { redirectTo: "/login" });
 }
