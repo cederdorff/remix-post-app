@@ -2,9 +2,10 @@ import { Form, useLoaderData } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
 
 export async function loader({ request }) {
-  return await authenticator.isAuthenticated(request, {
+  const user = await authenticator.isAuthenticated(request, {
     failureRedirect: "/signin"
   });
+  return user;
 }
 
 export default function Profile() {
@@ -12,7 +13,9 @@ export default function Profile() {
   return (
     <div className="page">
       <h1>Profile</h1>
-      <p>User: {user.mail}</p>
+      <p>Name: {user.name}</p>
+      <p>Title: {user.title}</p>
+      <p>Mail: {user.mail}</p>
       <Form method="post">
         <button>Logout</button>
       </Form>
