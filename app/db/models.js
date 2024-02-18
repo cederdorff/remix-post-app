@@ -26,19 +26,16 @@ const userSchema = new mongoose.Schema(
 
 // pre save password hook
 userSchema.pre("save", async function (next) {
-  const user = this;
+  const user = this; // this refers to the user document
 
-  // Only hash the password if it has been modified (or is new)
-  if (!user.isModified("password")) return next();
-
-  try {
-    // Generate a salt and hash the password directly
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-    next();
-  } catch (err) {
-    next(err);
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified("password")) {
+    return next(); // continue
   }
+
+  const salt = await bcrypt.genSalt(10); // generate a salt
+  user.password = await bcrypt.hash(user.password, salt); // hash the password
+  next(); // continue
 });
 
 // create a post schema
