@@ -1,6 +1,7 @@
 /* ---------- Root Variables ---------- */
 :root {
   --green: rgb(38, 76, 89);
+  --dark-green: rgb(9, 47, 59);
   --light-green: rgb(172, 198, 201);
   --light-grey: #f1f1f4;
   --text-color-danger: rgb(152, 58, 58);
@@ -48,6 +49,16 @@ h2 {
 h3 {
   font-weight: 500;
   letter-spacing: 0.1px;
+}
+
+a {
+  color: var(--green);
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+a:hover {
+  color: var(--dark-green);
 }
 
 /* ---------- Form, input and button Styling ---------- */
