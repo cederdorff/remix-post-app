@@ -67,7 +67,7 @@ export async function action({ request }) {
 
   const result = await mongoose.models.User.create(newUser); // create the user
 
-  // if the user was created successfully redirect to /signin
+  // If the user is created successfully redirect to /signin
   if (result) {
     return redirect("/signin");
   } else {
