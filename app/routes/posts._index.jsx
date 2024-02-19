@@ -1,16 +1,19 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import PostCard from "../components/PostCard";
 import mongoose from "mongoose";
+import PostCard from "../components/PostCard";
+import { authenticator } from "../services/auth.server";
 
 export const meta = () => {
   return [{ title: "Remix Post App" }];
 };
 
-export async function loader() {
-  const posts = await mongoose.models.Post.find()
-    .sort({ createdAt: -1 })
-    .populate("user");
+export async function loader({ request }) {
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin"
+  });
+
+  const posts = await mongoose.models.Post.find().sort({ createdAt: -1 }).populate("user");
 
   return json({ posts });
 }

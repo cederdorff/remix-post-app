@@ -1,7 +1,8 @@
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useNavigate } from "@remix-run/react";
-import { useState } from "react";
 import mongoose from "mongoose";
+import { useState } from "react";
+import { authenticator } from "../services/auth.server";
 
 export function meta() {
   return [
@@ -11,7 +12,11 @@ export function meta() {
   ];
 }
 
-export async function loader({ params }) {
+export async function loader({ request, params }) {
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin"
+  });
+
   const post = await mongoose.models.Post.findById(params.postId).populate("user");
   return json({ post });
 }

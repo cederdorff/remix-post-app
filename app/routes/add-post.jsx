@@ -2,10 +2,18 @@ import { redirect } from "@remix-run/node";
 import { Form, useNavigate } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useState } from "react";
+import { authenticator } from "../services/auth.server";
 
 export const meta = () => {
   return [{ title: "Remix Post App - Add New Post" }];
 };
+
+export async function loader({ request }) {
+  return await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin"
+  });
+}
+
 export default function AddPost() {
   const [image, setImage] = useState("https://placehold.co/600x400?text=Add+your+amazing+image");
   const navigate = useNavigate();
@@ -47,6 +55,15 @@ export default function AddPost() {
 export async function action({ request }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
+
+  // Get the authenticated user
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin"
+  });
+  console.log(user);
+  // Add the authenticated user's id to the post.user field
+  post.user = user._id;
+  // Save the post to the database
   await mongoose.models.Post.create(post);
 
   return redirect("/posts");
