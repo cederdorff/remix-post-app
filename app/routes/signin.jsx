@@ -1,7 +1,7 @@
-import { Form, NavLink, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import { sessionStorage } from "../services/session.server";
+import { Form, NavLink, useLoaderData } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
+import { sessionStorage } from "../services/session.server";
 
 export async function loader({ request }) {
   // If the user is already authenticated redirect to /posts directly

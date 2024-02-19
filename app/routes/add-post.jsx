@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { Form, useLoaderData, useNavigate } from "@remix-run/react";
+import { Form, useNavigate } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useState } from "react";
 import { authenticator } from "../services/auth.server";

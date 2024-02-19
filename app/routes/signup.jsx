@@ -1,8 +1,8 @@
 import { json, redirect } from "@remix-run/node";
 import { Form, NavLink, useLoaderData } from "@remix-run/react";
+import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
 import { sessionStorage } from "../services/session.server";
-import mongoose from "mongoose";
 
 export async function loader({ request }) {
   // If the user is already authenticated redirect to /posts directly
