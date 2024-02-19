@@ -55,6 +55,15 @@ export default function AddPost() {
 export async function action({ request }) {
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
+
+  // Get the authenticated user
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin"
+  });
+  console.log(user);
+  // Add the authenticated user's id to the post.user field
+  post.user = user._id;
+  // Save the post to the database
   await mongoose.models.Post.create(post);
 
   return redirect("/posts");
