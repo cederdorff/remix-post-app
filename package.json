@@ -10,10 +10,10 @@
     "start": "remix-serve ./build/index.js"
   },
   "dependencies": {
-    "@remix-run/css-bundle": "^2.4.0",
-    "@remix-run/node": "^2.4.0",
-    "@remix-run/react": "^2.4.0",
-    "@remix-run/serve": "^2.4.0",
+    "@remix-run/css-bundle": "2.6.0",
+    "@remix-run/node": "2.6.0",
+    "@remix-run/react": "2.6.0",
+    "@remix-run/serve": "2.6.0",
     "bcrypt": "^5.1.1",
     "isbot": "^3.6.8",
     "mongodb": "^6.3.0",
@@ -24,7 +24,7 @@
     "remix-auth-form": "^1.4.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.4.0",
+    "@remix-run/dev": "2.6.0",
     "@types/bcryptjs": "^2.4.6",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^9.0.0",
