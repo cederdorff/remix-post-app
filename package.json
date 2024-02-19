@@ -10,10 +10,10 @@
     "start": "remix-serve ./build/index.js"
   },
   "dependencies": {
-    "@remix-run/css-bundle": "^2.4.0",
-    "@remix-run/node": "^2.4.0",
-    "@remix-run/react": "^2.4.0",
-    "@remix-run/serve": "^2.4.0",
+    "@remix-run/css-bundle": "2.6.0",
+    "@remix-run/node": "2.6.0",
+    "@remix-run/react": "2.6.0",
+    "@remix-run/serve": "2.6.0",
     "isbot": "^3.6.8",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.2",
@@ -21,7 +21,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.4.0",
+    "@remix-run/dev": "2.6.0",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
