@@ -7,17 +7,19 @@ import { authenticator } from "../services/auth.server";
 export function meta() {
   return [
     {
-      title: "Remix Post App - Update"
-    }
+      title: "Remix Post App - Update",
+    },
   ];
 }
 
 export async function loader({ request, params }) {
   await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin"
+    failureRedirect: "/signin",
   });
 
-  const post = await mongoose.models.Post.findById(params.postId).populate("user");
+  const post = await mongoose.models.Post.findById(params.postId).populate(
+    "user"
+  );
   return json({ post });
 }
 
@@ -48,7 +50,7 @@ export default function UpdatePost() {
           name="image"
           defaultValue={post.image}
           type="url"
-          onChange={e => setImage(e.target.value)}
+          onChange={(e) => setImage(e.target.value)}
           placeholder="Paste an image URL..."
         />
 
@@ -56,9 +58,16 @@ export default function UpdatePost() {
         <img
           id="image-preview"
           className="image-preview"
-          src={image ? image : "https://placehold.co/600x400?text=Paste+an+image+URL"}
+          src={
+            image
+              ? image
+              : "https://placehold.co/600x400?text=Paste+an+image+URL"
+          }
           alt="Choose"
-          onError={e => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
+          onError={(e) =>
+            (e.target.src =
+              "https://placehold.co/600x400?text=Error+loading+image")
+          }
         />
 
         <input name="uid" type="text" defaultValue={post.uid} hidden />
@@ -79,7 +88,7 @@ export async function action({ request, params }) {
 
   await mongoose.models.Post.findByIdAndUpdate(params.postId, {
     caption: post.caption,
-    image: post.image
+    image: post.image,
   });
 
   return redirect(`/posts/${params.postId}`);
