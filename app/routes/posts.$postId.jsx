@@ -7,8 +7,8 @@ import { authenticator } from "../services/auth.server";
 export function meta({ data }) {
   return [
     {
-      title: `Remix Post App - ${data.post.caption || "Post"}`
-    }
+      title: `Remix Post App - ${data.post.caption || "Post"}`,
+    },
   ];
 }
 
