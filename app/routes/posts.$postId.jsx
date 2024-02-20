@@ -15,10 +15,12 @@ export function meta({ data }) {
 export async function loader({ request, params }) {
   // Ensure the user is authenticated
   await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin"
+    failureRedirect: "/signin",
   });
   // Load the post and the user who created it
-  const post = await mongoose.models.Post.findById(params.postId).populate("user");
+  const post = await mongoose.models.Post.findById(params.postId).populate(
+    "user"
+  );
   return json({ post });
 }
 
