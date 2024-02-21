@@ -15,8 +15,6 @@ export async function loader({ request }) {
   // Remove the error message from the session after it's been retrieved
   session.unset("sessionErrorKey");
   // Commit the updated session that no longer contains the error message
-  await sessionStorage.commitSession(session);
-  // Commit the updated session that no longer contains the error message
   const headers = new Headers({
     "Set-Cookie": await sessionStorage.commitSession(session),
   });
