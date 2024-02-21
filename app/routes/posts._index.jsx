@@ -13,9 +13,7 @@ export async function loader({ request }) {
     failureRedirect: "/signin",
   });
 
-  const posts = await mongoose.models.Post.find()
-    .sort({ createdAt: -1 })
-    .populate("user");
+  const posts = await mongoose.models.Post.find().sort({ createdAt: -1 }).populate("user");
 
   return json({ posts });
 }
