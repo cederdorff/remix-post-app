@@ -24,8 +24,10 @@ export async function loader({ request }) {
 }
 
 export default function SignUp() {
-  // if i got an error it will come back with the loader dxata
+  // if i got an error it will come back with the loader data
   const loaderData = useLoaderData();
+  console.log("error:", loaderData?.error);
+
   return (
     <div id="sign-up-page" className="page">
       <h1>Sign Up</h1>
