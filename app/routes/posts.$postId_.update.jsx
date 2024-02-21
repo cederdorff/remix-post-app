@@ -83,9 +83,14 @@ export default function UpdatePost() {
 }
 
 export async function action({ request, params }) {
+  // Protect the route
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin",
+  });
+  // Get the form data
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
-
+  // Update the post in the database
   await mongoose.models.Post.findByIdAndUpdate(params.postId, {
     caption: post.caption,
     image: post.image,
