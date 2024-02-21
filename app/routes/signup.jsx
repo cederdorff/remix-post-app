@@ -13,7 +13,6 @@ export async function loader({ request }) {
   const session = await sessionStorage.getSession(request.headers.get("Cookie"));
   // Get the error message from the session
   const error = session.get("sessionErrorKey");
-  console.log("error", error);
   // Remove the error message from the session after it's been retrieved
   session.unset("sessionErrorKey");
   // Commit the updated session that no longer contains the error message
