@@ -17,9 +17,7 @@ export async function loader({ request, params }) {
     failureRedirect: "/signin",
   });
 
-  const post = await mongoose.models.Post.findById(params.postId).populate(
-    "user"
-  );
+  const post = await mongoose.models.Post.findById(params.postId).populate("user");
   return json({ post });
 }
 
@@ -58,16 +56,9 @@ export default function UpdatePost() {
         <img
           id="image-preview"
           className="image-preview"
-          src={
-            image
-              ? image
-              : "https://placehold.co/600x400?text=Paste+an+image+URL"
-          }
+          src={image ? image : "https://placehold.co/600x400?text=Paste+an+image+URL"}
           alt="Choose"
-          onError={(e) =>
-            (e.target.src =
-              "https://placehold.co/600x400?text=Error+loading+image")
-          }
+          onError={(e) => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
         />
 
         <input name="uid" type="text" defaultValue={post.uid} hidden />
@@ -84,17 +75,27 @@ export default function UpdatePost() {
 
 export async function action({ request, params }) {
   // Protect the route
-  await authenticator.isAuthenticated(request, {
+  const authUser = await authenticator.isAuthenticated(request, {
     failureRedirect: "/signin",
   });
-  // Get the form data
+
+  // Fetch the post to check if the current user is the creator
+  const postToUpdate = await mongoose.models.Post.findById(params.postId);
+
+  if (postToUpdate.user.toString() !== authUser._id.toString()) {
+    // User is not the creator of the post, redirect
+    return redirect(`/posts/${params.postId}`);
+  }
+
+  // User is authenticated and is the creator, proceed to update the post
   const formData = await request.formData();
   const post = Object.fromEntries(formData);
-  // Update the post in the database
-  await mongoose.models.Post.findByIdAndUpdate(params.postId, {
-    caption: post.caption,
-    image: post.image,
-  });
+
+  // Since postToUpdate is already the document you want to update,
+  // you can directly modify and save it, which can be more efficient than findByIdAndUpdate
+  postToUpdate.caption = post.caption;
+  postToUpdate.image = post.image;
+  await postToUpdate.save();
 
   return redirect(`/posts/${params.postId}`);
 }
