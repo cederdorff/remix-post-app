@@ -7,13 +7,23 @@ import { sessionStorage } from "../services/session.server";
 export async function loader({ request }) {
   // If the user is already authenticated redirect to /posts directly
   await authenticator.isAuthenticated(request, {
-    successRedirect: "/posts"
+    successRedirect: "/posts",
   });
+
   // Retrieve error message from session if present
   const session = await sessionStorage.getSession(request.headers.get("Cookie"));
   // Get the error message from the session
   const error = session.get("sessionErrorKey");
-  return json({ error }); // return the error message
+  // Remove the error message from the session after it's been retrieved
+  session.unset("sessionErrorKey");
+  // Commit the updated session that no longer contains the error message
+  await sessionStorage.commitSession(session);
+  // Commit the updated session that no longer contains the error message
+  const headers = new Headers({
+    "Set-Cookie": await sessionStorage.commitSession(session),
+  });
+
+  return json({ error }, { headers }); // return the error message
 }
 
 export default function SignUp() {
