@@ -24,6 +24,7 @@ export async function loader({ request, params }) {
 
 export default function Post() {
   const { post, authUser } = useLoaderData();
+
   function confirmDelete(event) {
     const response = confirm("Please confirm you want to delete this post.");
     if (!response) {
