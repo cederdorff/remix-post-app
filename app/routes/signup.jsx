@@ -9,15 +9,13 @@ export async function loader({ request }) {
   await authenticator.isAuthenticated(request, {
     successRedirect: "/posts",
   });
-
   // Retrieve error message from session if present
   const session = await sessionStorage.getSession(request.headers.get("Cookie"));
   // Get the error message from the session
   const error = session.get("sessionErrorKey");
+  console.log("error", error);
   // Remove the error message from the session after it's been retrieved
   session.unset("sessionErrorKey");
-  // Commit the updated session that no longer contains the error message
-  await sessionStorage.commitSession(session);
   // Commit the updated session that no longer contains the error message
   const headers = new Headers({
     "Set-Cookie": await sessionStorage.commitSession(session),
@@ -72,15 +70,14 @@ export default function SignUp() {
 }
 
 export async function action({ request }) {
-  const formData = await request.formData(); // get the form data
-  const newUser = Object.fromEntries(formData); // convert the form data to an object
+  try {
+    const formData = await request.formData(); // get the form data
+    const newUser = Object.fromEntries(formData); // convert the form data to an object
+    await mongoose.models.User.create(newUser); // create the user
 
-  const result = await mongoose.models.User.create(newUser); // create the user
-
-  // If the user is created successfully redirect to /signin
-  if (result) {
-    return redirect("/signin");
-  } else {
+    return redirect("/signin"); // redirect to the sign-in page
+  } catch (error) {
+    console.log(error);
     return redirect("/signup");
   }
 }
