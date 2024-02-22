@@ -11,18 +11,18 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   env: {
     browser: true,
     commonjs: true,
-    es6: true
+    es6: true,
   },
   globals: {
     // Because loaders and actions are defined in the app's routes, allow
     // reading from `process`.
-    process: "readonly"
+    process: "readonly",
   },
 
   // Base config
@@ -36,29 +36,29 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
         "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended"
+        "plugin:jsx-a11y/recommended",
       ],
       rules: {
-        "react/prop-types": "off"
+        "react/prop-types": "off",
       },
       settings: {
         react: {
-          version: "detect"
+          version: "detect",
         },
         formComponents: ["Form"],
         linkComponents: [
           { name: "Link", linkAttribute: "to" },
-          { name: "NavLink", linkAttribute: "to" }
-        ]
-      }
+          { name: "NavLink", linkAttribute: "to" },
+        ],
+      },
     },
 
     // Node
     {
       files: [".eslintrc.js"],
       env: {
-        node: true
-      }
-    }
-  ]
+        node: true,
+      },
+    },
+  ],
 };
