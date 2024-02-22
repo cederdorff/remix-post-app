@@ -15,9 +15,7 @@ export async function loader({ request }) {
 }
 
 export default function AddPost() {
-  const [image, setImage] = useState(
-    "https://placehold.co/600x400?text=Add+your+amazing+image"
-  );
+  const [image, setImage] = useState("https://placehold.co/600x400?text=Add+your+amazing+image");
   const navigate = useNavigate();
 
   function handleCancel() {
@@ -29,36 +27,18 @@ export default function AddPost() {
       <h1>Add a Post</h1>
       <Form id="post-form" method="post">
         <label htmlFor="caption">Caption</label>
-        <input
-          id="caption"
-          name="caption"
-          type="text"
-          aria-label="caption"
-          placeholder="Write a caption..."
-        />
+        <input id="caption" name="caption" type="text" aria-label="caption" placeholder="Write a caption..." />
 
         <label htmlFor="image">Image URL</label>
-        <input
-          name="image"
-          type="url"
-          onChange={(e) => setImage(e.target.value)}
-          placeholder="Paste an image URL..."
-        />
+        <input name="image" type="url" onChange={(e) => setImage(e.target.value)} placeholder="Paste an image URL..." />
 
         <label htmlFor="image-preview">Image Preview</label>
         <img
           id="image-preview"
           className="image-preview"
-          src={
-            image
-              ? image
-              : "https://placehold.co/600x400?text=Paste+an+image+URL"
-          }
+          src={image ? image : "https://placehold.co/600x400?text=Paste+an+image+URL"}
           alt="Choose"
-          onError={(e) =>
-            (e.target.src =
-              "https://placehold.co/600x400?text=Error+loading+image")
-          }
+          onError={(e) => (e.target.src = "https://placehold.co/600x400?text=Error+loading+image")}
         />
 
         <div className="btns">
