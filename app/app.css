@@ -249,7 +249,7 @@ nav a.active {
 
 .grid-filter {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 1em;
   padding: 1em;
   background-color: var(--white);

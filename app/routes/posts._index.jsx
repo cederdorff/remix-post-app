@@ -50,7 +50,7 @@ export default function Index() {
   const { posts, tags, q, sortBy, filterTag } = useLoaderData();
   const submit = useSubmit();
 
-  function handleSearchOnChange(event) {
+  function handleSearchFilterAndSort(event) {
     const isFirstSearch = q === null;
     submit(event.currentTarget, {
       replace: !isFirstSearch,
@@ -60,20 +60,11 @@ export default function Index() {
   return (
     <div className="page">
       <h1>Posts</h1>
-      <Form className="grid-filter" id="search-form" role="search" onChange={handleSearchOnChange}>
+      <Form className="grid-filter" id="search-form" role="search" onChange={handleSearchFilterAndSort}>
         <label>
           Serach by caption{" "}
           <input aria-label="Search by caption" defaultValue={q} placeholder="Search" type="search" name="q" />
         </label>
-        <label>
-          Sort by{" "}
-          <select name="sort-by" defaultValue={sortBy}>
-            <option value="createdAt">newest</option>
-            <option value="caption">caption</option>
-            <option value="likes">most likes</option>
-          </select>
-        </label>
-
         <label>
           Filter by tag{" "}
           <select name="tag" defaultValue={filterTag}>
@@ -83,6 +74,14 @@ export default function Index() {
                 {tag}
               </option>
             ))}
+          </select>
+        </label>
+        <label>
+          Sort by{" "}
+          <select name="sort-by" defaultValue={sortBy}>
+            <option value="createdAt">newest</option>
+            <option value="caption">caption</option>
+            <option value="likes">most likes</option>
           </select>
         </label>
       </Form>
