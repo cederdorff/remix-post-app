@@ -13,13 +13,41 @@ export async function loader({ request }) {
     failureRedirect: "/signin",
   });
 
-  const posts = await mongoose.models.Post.find().sort({ createdAt: -1 }).populate("user");
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q") || "";
+  const sortBy = url.searchParams.get("sort-by") || "createdAt";
+  const filterTag = url.searchParams.get("tag") || "";
 
-  return json({ posts });
+  // Assuming you want to sort in ascending order.
+  // If you need descending order for some fields, you might need to adjust the logic accordingly.
+  const sortOption = {};
+  sortOption[sortBy] = sortBy != "caption" ? -1 : 1; // Use -1 here if you want to sort in descending order by default
+
+  const query = { caption: { $regex: q, $options: "i" } };
+  if (filterTag) {
+    query.tags = filterTag;
+  }
+  const posts = await mongoose.models.Post.find(query).sort(sortOption).populate("user");
+
+  const uniqueTags = await mongoose.models.Post.aggregate([
+    // Unwind the array of tags to make each tag a separate document
+    { $unwind: "$tags" },
+    // Group by the tag to eliminate duplicates
+    { $group: { _id: "$tags" } },
+    // Optionally, you might want to sort the tags alphabetically
+    { $sort: { _id: 1 } },
+    // Project to get the desired output format, if needed
+    { $project: { tag: "$_id", _id: 0 } },
+  ]);
+
+  // Extract just the tags from the results
+  const tags = uniqueTags.map((tagDoc) => tagDoc.tag);
+
+  return json({ posts, tags, q, sortBy, filterTag });
 }
 
 export default function Index() {
-  const { posts, q } = useLoaderData();
+  const { posts, tags, q, sortBy, filterTag } = useLoaderData();
   const submit = useSubmit();
 
   function handleSearchOnChange(event) {
@@ -28,43 +56,36 @@ export default function Index() {
       replace: !isFirstSearch,
     });
   }
+
   return (
     <div className="page">
       <h1>Posts</h1>
-      <div className="grid-filter">
-        <Form id="search-form" role="search" onChange={handleSearchOnChange}>
-          <label>
-            Serach by caption{" "}
-            <input aria-label="Search by caption" defaultValue={q || ""} placeholder="Search" type="search" name="q" />
-          </label>
-        </Form>
-        <Form id="sort-form">
-          <label>
-            Sort by{" "}
-            <select name="sort-by">
-              <option value="date" selected>
-                date
+      <Form className="grid-filter" id="search-form" role="search" onChange={handleSearchOnChange}>
+        <label>
+          Serach by caption{" "}
+          <input aria-label="Search by caption" defaultValue={q} placeholder="Search" type="search" name="q" />
+        </label>
+        <label>
+          Sort by{" "}
+          <select name="sort-by" defaultValue={sortBy}>
+            <option value="createdAt">newest</option>
+            <option value="caption">caption</option>
+            <option value="likes">most likes</option>
+          </select>
+        </label>
+
+        <label>
+          Filter by tag{" "}
+          <select name="tag" defaultValue={filterTag}>
+            <option value="">select tag</option>
+            {tags.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
               </option>
-              <option value="caption">caption</option>
-              <option value="likes">likes</option>
-              <option value="user-name">user name</option>
-              <option value="user-title">user title</option>
-            </select>
-          </label>
-        </Form>
-        <Form id="filter-by-tag-form">
-          <label>
-            Filter by tag{" "}
-            <select name="filter-by-tag-form">
-              <option value="">select tag</option>
-              <option value="aarhus">aarhus</option>
-              <option value="date">date</option>
-              <option value="user-name">user name</option>
-              <option value="user-title">user title</option>
-            </select>
-          </label>
-        </Form>
-      </div>
+            ))}
+          </select>
+        </label>
+      </Form>
       <section className="grid">
         {posts.map((post) => (
           <Link key={post._id} className="post-link" to={`${post._id}`}>
