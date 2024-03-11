@@ -7,7 +7,10 @@ export default function Tabs() {
         <NavLink to="/tabs/tab1">Tab 1</NavLink>
         <NavLink to="/tabs/tab2">Tab 2</NavLink>
       </nav>
-      <Outlet /> {/* To render the content of the active tab */}
+      <div className="page">
+        <h1>This is my main tab page</h1>
+        <Outlet /> {/* To render the content of the active tab */}
+      </div>
     </div>
   );
 }
