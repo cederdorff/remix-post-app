@@ -13,44 +13,23 @@ export async function loader({ request }) {
     failureRedirect: "/signin",
   });
 
-  const url = new URL(request.url);
-  const q = url.searchParams.get("q") || "";
-  const sortBy = url.searchParams.get("sort-by") || "createdAt";
-  const filterTag = url.searchParams.get("tag") || "";
+  // SEARCH
+  const url = new URL(request.url); // Parse the URL
+  const q = url.searchParams.get("q") || ""; // Get the query string
 
-  // Assuming you want to sort in ascending order.
-  // If you need descending order for some fields, you might need to adjust the logic accordingly.
-  const sortOption = {};
-  sortOption[sortBy] = sortBy != "caption" ? -1 : 1; // Use -1 here if you want to sort in descending order by default
+  const query = { caption: { $regex: q, $options: "i" } }; // Create a query object
 
-  const query = { caption: { $regex: q, $options: "i" } };
-  if (filterTag) {
-    query.tags = filterTag;
-  }
-  const posts = await mongoose.models.Post.find(query).sort(sortOption).populate("user");
+  const posts = await mongoose.models.Post.find(query).populate("user"); // Find all posts that match the query
 
-  const uniqueTags = await mongoose.models.Post.aggregate([
-    // Unwind the array of tags to make each tag a separate document
-    { $unwind: "$tags" },
-    // Group by the tag to eliminate duplicates
-    { $group: { _id: "$tags" } },
-    // Optionally, you might want to sort the tags alphabetically
-    { $sort: { _id: 1 } },
-    // Project to get the desired output format, if needed
-    { $project: { tag: "$_id", _id: 0 } },
-  ]);
-
-  // Extract just the tags from the results
-  const tags = uniqueTags.map((tagDoc) => tagDoc.tag);
-
-  return json({ posts, tags, q, sortBy, filterTag });
+  return json({ posts, q });
 }
 
 export default function Index() {
-  const { posts, tags, q, sortBy, filterTag } = useLoaderData();
-  const submit = useSubmit();
+  const { posts, q } = useLoaderData(); // Get the posts and the search query
+  const submit = useSubmit(); // Get the submit function
 
-  function handleSearchFilterAndSort(event) {
+  // Handle the search
+  function handleSearch(event) {
     const isFirstSearch = q === null;
     submit(event.currentTarget, {
       replace: !isFirstSearch,
@@ -60,29 +39,10 @@ export default function Index() {
   return (
     <div className="page">
       <h1>Posts</h1>
-      <Form className="grid-filter" id="search-form" role="search" onChange={handleSearchFilterAndSort}>
+      <Form className="grid-filter" id="search-form" role="search" onChange={handleSearch}>
         <label>
-          Serach by caption{" "}
+          Serach by caption
           <input aria-label="Search by caption" defaultValue={q} placeholder="Search" type="search" name="q" />
-        </label>
-        <label>
-          Filter by tag{" "}
-          <select name="tag" defaultValue={filterTag}>
-            <option value="">select tag</option>
-            {tags.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Sort by{" "}
-          <select name="sort-by" defaultValue={sortBy}>
-            <option value="createdAt">newest</option>
-            <option value="caption">caption</option>
-            <option value="likes">most likes</option>
-          </select>
         </label>
       </Form>
       <section className="grid">
