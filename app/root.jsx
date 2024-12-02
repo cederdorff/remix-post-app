@@ -3,7 +3,10 @@ import appStylesHref from "./app.css";
 import Nav from "./components/Nav";
 import { authenticator } from "./services/auth.server";
 
-export const links = () => [{ rel: "stylesheet", href: appStylesHref }];
+export const links = () => [
+  { rel: "stylesheet", href: appStylesHref },
+  { rel: "icon", href: "/favicon.ico" },
+];
 
 export async function loader({ request }) {
   return await authenticator.isAuthenticated(request);

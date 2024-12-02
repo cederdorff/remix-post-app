@@ -62,7 +62,7 @@ export default function Index() {
       <h1>Posts</h1>
       <Form className="grid-filter" id="search-form" role="search" onChange={handleSearchFilterAndSort}>
         <label>
-          Serach by caption{" "}
+          Search by caption{" "}
           <input aria-label="Search by caption" defaultValue={q} placeholder="Search" type="search" name="q" />
         </label>
         <label>
